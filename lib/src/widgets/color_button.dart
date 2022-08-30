@@ -14,6 +14,13 @@ import 'picker_config.dart' if (dart.library.js) 'picker_config_web.dart';
 
 const _buttonSize = 48.0;
 
+OverlayEntry overlayColorButton(
+    BuildContext context, Color color, ValueChanged<Color> onColorChanged) {
+  return OverlayEntry(builder: (context) {
+    return ColorButton(color: color, onColorChanged: onColorChanged);
+  });
+}
+
 class ColorButton extends StatefulWidget {
   final Color color;
   final double size;
