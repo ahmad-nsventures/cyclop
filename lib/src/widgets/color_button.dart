@@ -162,6 +162,11 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     );
   }
 
+  void close() {
+    pickerOverlay?.remove();
+    pickerOverlay = null;
+  }
+
   Offset calculatePickerPosition(Offset offset, Size size) =>
       offset +
       Offset(
