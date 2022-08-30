@@ -23,7 +23,7 @@ class ColorButton extends StatefulWidget {
   final Set<Color> swatches;
 
   final ValueChanged<Color> onColorChanged;
-
+  final bool closeStatus;
   final ValueChanged<Set<Color>>? onSwatchesChanged;
 
   final double elevation;
@@ -34,6 +34,7 @@ class ColorButton extends StatefulWidget {
     required this.color,
     required this.onColorChanged,
     this.onSwatchesChanged,
+    required this.closeStatus,
     this.elevation = 3,
     this.decoration,
     this.config = const ColorPickerConfig(),
@@ -76,8 +77,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-    pickerOverlay?.remove();
-    pickerOverlay = null;
+
     super.dispose();
   }
 
@@ -119,6 +119,9 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   }
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
+    if (widget.closeStatus) {
+      close();
+    }
     final mq = MediaQuery.of(context);
     final onLandscape =
         mq.size.shortestSide < 600 && mq.orientation == Orientation.landscape;
