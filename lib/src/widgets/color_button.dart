@@ -76,6 +76,8 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+    pickerOverlay?.remove();
+    pickerOverlay = null;
     super.dispose();
   }
 
