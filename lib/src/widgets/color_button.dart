@@ -28,12 +28,15 @@ class ColorButton extends StatefulWidget {
 
   final double elevation;
 
+  OverlayEntry? pickerOverlay;
+
   final bool darkMode;
 
-  const ColorButton({
+  ColorButton({
     required this.color,
     required this.onColorChanged,
     this.onSwatchesChanged,
+    this.pickerOverlay,
     this.elevation = 3,
     this.decoration,
     this.config = const ColorPickerConfig(),
@@ -49,7 +52,7 @@ class ColorButton extends StatefulWidget {
 }
 
 class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
-  OverlayEntry? pickerOverlay;
+  // OverlayEntry? pickerOverlay;
 
   late Color color;
 
@@ -107,11 +110,11 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   }
 
   Future<Color> showColorPicker(BuildContext rootContext, Offset offset) async {
-    if (pickerOverlay != null) return Future.value(widget.color);
+    if (widget.pickerOverlay != null) return Future.value(widget.color);
 
-    pickerOverlay = _buildPickerOverlay(offset, rootContext);
+    widget.pickerOverlay = _buildPickerOverlay(offset, rootContext);
 
-    Overlay.of(rootContext)?.insert(pickerOverlay!);
+    Overlay.of(rootContext)?.insert(widget.pickerOverlay!);
 
     return Future.value(widget.color);
   }
@@ -142,12 +145,12 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
                   selectedColor: color,
                   swatches: widget.swatches,
                   onClose: () {
-                    pickerOverlay?.remove();
-                    pickerOverlay = null;
+                    widget.pickerOverlay?.remove();
+                    widget.pickerOverlay = null;
                   },
                   onColorSelected: (c) {
                     color = c;
-                    pickerOverlay?.markNeedsBuild();
+                    widget.pickerOverlay?.markNeedsBuild();
                     widget.onColorChanged(c);
                   },
                   onSwatchesUpdate: widget.onSwatchesChanged,
@@ -184,12 +187,12 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   void _onEyePick(Color value) {
     color = value;
     widget.onColorChanged(value);
-    pickerOverlay?.markNeedsBuild();
+    widget.pickerOverlay?.markNeedsBuild();
   }
 
   void _onKeyboardOn() {
     keyboardOn = true;
-    pickerOverlay?.markNeedsBuild();
+    widget.pickerOverlay?.markNeedsBuild();
     setState(() {});
   }
 
@@ -202,7 +205,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
         window.devicePixelRatio;
 
     setState(() => bottom = newBottom);
-    pickerOverlay?.markNeedsBuild();
+    widget.pickerOverlay?.markNeedsBuild();
   }
 }
 
