@@ -56,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: const EdgeInsets.only(right: 12),
             child: Center(
               child: ColorButton(
+                closeStatus: false,
                 darkMode: true,
                 key: const Key('c2'),
                 color: appbarColor,
@@ -99,6 +100,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Center(
             child: ColorButton(
+              closeStatus: false,
               key: const Key('c1'),
               color: backgroundColor,
               swatches: swatches,
@@ -123,6 +125,7 @@ class _MainScreenState extends State<MainScreen> {
               onColorChanged: (value) => setState(
                 () => backgroundColor = value,
               ),
+              closeStatus: false,
             ),
           ),
           EyedropperButton(
